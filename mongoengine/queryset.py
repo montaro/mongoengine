@@ -667,7 +667,7 @@ class QuerySet(object):
     def __len__(self):
         return self.count()
 
-    def map_reduce(self, map_f, reduce_f, finalize_f=None, limit=None,
+    def map_reduce(self, map_f, reduce_f, out, finalize_f=None, limit=None,
                    scope=None, keep_temp=False):
         """Perform a map/reduce query using the current query spec
         and ordering. While ``map_reduce`` respects ``QuerySet`` chaining,
@@ -731,6 +731,8 @@ class QuerySet(object):
 
         if limit:
             mr_args['limit'] = limit
+            
+        mr_args['out'] = out
 
         results = self._collection.map_reduce(map_f, reduce_f, **mr_args)
         results = results.find()

@@ -800,9 +800,9 @@ class QuerySetTest(unittest.TestCase):
                 return total;
             }
         """
-
+        out = 'mapreducetempdata'
         # run a map/reduce operation spanning all posts
-        results = BlogPost.objects.map_reduce(map_f, reduce_f)
+        results = BlogPost.objects.map_reduce(map_f, reduce_f, out)
         results = list(results)
         self.assertEqual(len(results), 4)
 
@@ -850,8 +850,8 @@ class QuerySetTest(unittest.TestCase):
                 return total;
             }
         """
-        
-        results = BlogPost.objects.map_reduce(map_f, reduce_f)
+        out = 'mapreducetempdata'
+        results = BlogPost.objects.map_reduce(map_f, reduce_f, out)
         results = list(results)
         
         self.assertEqual(results[0].object, post1)
@@ -960,8 +960,10 @@ class QuerySetTest(unittest.TestCase):
         # to "-value", which orders the "weight" value returned from
         # "finalize_f" in descending order.
         results = Link.objects.order_by("-value")
+        out = 'mapreducetempdata'
         results = results.map_reduce(map_f,
                                      reduce_f,
+                                     out,
                                      finalize_f=finalize_f,
                                      scope=scope)
         results = list(results)
