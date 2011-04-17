@@ -681,6 +681,7 @@ class QuerySet(object):
         :param map_f: map function, as :class:`~pymongo.code.Code` or string
         :param reduce_f: reduce function, as
                          :class:`~pymongo.code.Code` or string
+        :param out: name of the collection to hold the map_reduce results data 
         :param finalize_f: finalize function, an optional function that
                            performs any post-reduction processing.
         :param scope: values to insert into map/reduce global scope. Optional.
